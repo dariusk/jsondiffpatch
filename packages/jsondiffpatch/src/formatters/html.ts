@@ -22,6 +22,7 @@ class HtmlFormatter extends BaseFormatter<HtmlFormatterContext> {
   }
 
   formatValue(context: HtmlFormatterContext, value: unknown) {
+    console.log('~~~~~~~~~~~~~~~~~HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
     context.out(`<pre>${htmlEscape(JSON.stringify(value, null, 2))}</pre>`);
   }
 
