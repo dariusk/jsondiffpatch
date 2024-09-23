@@ -80,9 +80,15 @@ class HtmlFormatter extends BaseFormatter {
     if (typeof left === 'undefined') {
       return;
     }
-    context.out('<div class="jsondiffpatch-value">');
-    this.formatValue(context, left);
-    context.out('</div>');
+
+    if (typeof left === 'object' && left !== null) {
+      this.format_node(context, {}, left);
+    }
+    else {
+      context.out('<div class="jsondiffpatch-value">');
+      this.formatValue(context, left);
+      context.out('</div>');
+    }
   }
 
   format_movedestination(context, delta, left) {
@@ -96,7 +102,7 @@ class HtmlFormatter extends BaseFormatter {
 
   format_node(context, delta, left) {
     // recurse
-    const nodeType = delta._t === 'a' ? 'array' : 'object';
+    const nodeType = (delta._t === 'a' || Array.isArray(left)) ? 'array' : 'object';
     context.out(
       `<ul class="jsondiffpatch-node jsondiffpatch-node-type-${nodeType}">`,
     );
